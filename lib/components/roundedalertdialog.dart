@@ -71,7 +71,12 @@ class Dialog extends StatelessWidget {
           child: new ConstrainedBox(
             constraints: const BoxConstraints(minWidth: 280.0),
             child: new Material(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0)), side: BorderSide(color: Colors.white, width: 1.0, style: BorderStyle.solid)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  side: BorderSide(
+                      color: Colors.white,
+                      width: 1.0,
+                      style: BorderStyle.solid)),
               elevation: 30.0,
               color: _getColor(context),
               type: MaterialType.card,
@@ -233,7 +238,7 @@ class CustomAlertDialog extends StatelessWidget {
             new EdgeInsets.fromLTRB(
                 24.0, 24.0, 24.0, content == null ? 20.0 : 0.0),
         child: new DefaultTextStyle(
-          style: Theme.of(context).textTheme.title,
+          style: Theme.of(context).textTheme.headline6,
           child: new Semantics(child: title, namesRoute: true),
         ),
       ));
@@ -246,6 +251,9 @@ class CustomAlertDialog extends StatelessWidget {
         case TargetPlatform.fuchsia:
           label = semanticLabel ??
               MaterialLocalizations.of(context)?.alertDialogLabel;
+          break;
+        default:
+          break;
       }
     }
 
@@ -254,7 +262,7 @@ class CustomAlertDialog extends StatelessWidget {
         child: new Padding(
           padding: contentPadding,
           child: new DefaultTextStyle(
-            style: Theme.of(context).textTheme.subhead,
+            style: Theme.of(context).textTheme.subtitle1,
             child: content,
           ),
         ),
@@ -262,10 +270,8 @@ class CustomAlertDialog extends StatelessWidget {
     }
 
     if (actions != null) {
-      children.add(new ButtonTheme.bar(
-        child: new ButtonBar(
-          children: actions,
-        ),
+      children.add(new ButtonBar(
+        children: actions,
       ));
     }
 
@@ -279,7 +285,7 @@ class CustomAlertDialog extends StatelessWidget {
 
     if (label != null)
       dialogChild =
-      new Semantics(namesRoute: true, label: label, child: dialogChild);
+          new Semantics(namesRoute: true, label: label, child: dialogChild);
 
     return new Dialog(child: dialogChild);
   }
@@ -488,7 +494,7 @@ class SimpleDialog extends StatelessWidget {
       body.add(new Padding(
           padding: titlePadding,
           child: new DefaultTextStyle(
-            style: Theme.of(context).textTheme.title,
+            style: Theme.of(context).textTheme.headline6,
             child: new Semantics(namesRoute: true, child: title),
           )));
     } else {
@@ -500,15 +506,18 @@ class SimpleDialog extends StatelessWidget {
         case TargetPlatform.fuchsia:
           label =
               semanticLabel ?? MaterialLocalizations.of(context)?.dialogLabel;
+          break;
+        default:
+          break;
       }
     }
 
     if (children != null) {
       body.add(new Flexible(
           child: new SingleChildScrollView(
-            padding: contentPadding,
-            child: new ListBody(children: children),
-          )));
+        padding: contentPadding,
+        child: new ListBody(children: children),
+      )));
     }
 
     Widget dialogChild = new IntrinsicWidth(
@@ -616,13 +625,13 @@ class _DialogRoute<T> extends PopupRoute<T> {
 ///  * <https://material.google.com/components/dialogs.html>
 Future<T> customShowDialog<T>({
   @required
-  BuildContext context,
+      BuildContext context,
   bool barrierDismissible: true,
   @Deprecated(
       'Instead of using the "child" argument, return the child from a closure '
-          'provided to the "builder" argument. This will ensure that the BuildContext '
-          'is appropriate for widgets built in the dialog.')
-  Widget child,
+      'provided to the "builder" argument. This will ensure that the BuildContext '
+      'is appropriate for widgets built in the dialog.')
+      Widget child,
   WidgetBuilder builder,
 }) {
   assert(child == null || builder == null);
@@ -630,7 +639,6 @@ Future<T> customShowDialog<T>({
     child: child ?? new Builder(builder: builder),
     theme: Theme.of(context, shadowThemeOnly: true),
     barrierDismissible: barrierDismissible,
-    barrierLabel:
-    MaterialLocalizations.of(context).modalBarrierDismissLabel,
+    barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
   ));
 }

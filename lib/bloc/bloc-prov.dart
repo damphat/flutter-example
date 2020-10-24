@@ -21,9 +21,8 @@ class BlocProvider<T extends Bloc> extends InheritedWidget {
   /// Method that allows widgets to access the bloc as long as their `BuildContext`
   /// contains a `BlocProvider` instance.
   static T of<T extends Bloc>(BuildContext context) {
-    final type = _typeOf<BlocProvider<T>>();
     final BlocProvider<T> provider = context
-        .ancestorInheritedElementForWidgetOfExactType(type)
+        .getElementForInheritedWidgetOfExactType<BlocProvider<T>>()
         ?.widget as BlocProvider<T>;
 
     if (provider == null) {
@@ -50,10 +49,6 @@ class BlocProvider<T extends Bloc> extends InheritedWidget {
       child: child,
     );
   }
-
-  /// Necessary to obtain generic [Type]
-  /// https://github.com/dart-lang/sdk/issues/11923
-  static Type _typeOf<T>() => T;
 
   @override
   bool updateShouldNotify(BlocProvider oldWidget) => false;

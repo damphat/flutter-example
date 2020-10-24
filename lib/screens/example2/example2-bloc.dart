@@ -1,8 +1,5 @@
 import 'dart:async';
-import 'dart:ui';
-import 'package:flutter/services.dart';
-import 'package:example/models/contact.dart';
-import 'package:flutter/material.dart';
+
 import 'package:example/bloc/bloc.dart';
 
 class Example2Bloc extends Bloc {
@@ -15,6 +12,6 @@ class Example2Bloc extends Bloc {
   Example2Bloc();
 
   void dispose() {
-    _exampleSubject.close();  
+    _exampleSubject.close();
   }
 }
